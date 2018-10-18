@@ -1,5 +1,6 @@
 /*
-Given an unsorted array of positive integers , find if there is an subset(even noncontiguous)  in the array that sum upto a value "sum"
+Given an unsorted array of positive integers , find if there is an subset(even noncontiguous)  
+in the array that sum upto a value "sum"
 
 Youtube - https://www.youtube.com/watch?v=5td2QH-x5ck
 */
