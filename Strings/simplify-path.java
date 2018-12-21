@@ -12,29 +12,32 @@ In this case, you should ignore redundant slashes and return "/home/foo".
 Solution: Take a stack. When you get a '/',  push any directory name in stack. Ignore any more '/' or '.' When you get a '../', pop the top of the stack and ignore it.
 
 */
-class Solution {
-    public String simplifyPath(String path) {
-                if (path == null || path.length() < 1) {
-            return "";
-        }
-        Stack<String> stack = new Stack<>();
-        String[] paths = path.split("/+");
-        for (String s : paths) {
-            if (s.equals("..")) {
-                if (!stack.isEmpty()) {
-                    stack.pop();
-                }
-            } else if (!s.equals(".") && !s.equals("")) {
-                stack.push(s);
-            }
-        }
-        String res = "";
-        while (!stack.isEmpty()) {
-            res = "/" + stack.pop() + res;
-        }
-        if (res.length() == 0) {
-            return "/";
-        }
-        return res;
+func simplifypath(path string) string {
+    var sb string
+    var s sstack
+
+    tokens := strings.Split(path, "/")
+    // check for empty string
+    if len(tokens) == 0 {
+        return ""
     }
+    // check for "/" path	
+    if len(path) == 1 {
+        return path
+    }
+    s.stackinit()
+    for _, token := range tokens {
+        if token == ".." {
+           if !s.isempty() {
+               s.pop()
+           }
+        } else if token != "." && token != "" {
+            s.push(token)
+        }
+    }
+    for ;s.isempty()==false; {
+        sb =  "/" + s.pop() + sb
+    }
+
+    return sb
 }
