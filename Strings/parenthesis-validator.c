@@ -22,20 +22,31 @@ Output: true
 */
 
 
-public boolean isValid(String s) {
-	Stack<Character> stack = new Stack<Character>();
-	for (char c : s.toCharArray()) {
-		if (c == '(')
-			stack.push(')');
-		else if (c == '{')
-			stack.push('}');
-		else if (c == '[')
-			stack.push(']');
-		else if (stack.isEmpty() || stack.pop() != c)
-			return false;
-	}
-	return stack.isEmpty();
+func parenthesesisValidator(str string) bool {
+    var s sstack
+
+    if len(str) == 0 {
+        return true
+    }
+    if len(str) == 1 {
+        return false
+    }
+    s.stackinit()
+    sarr := strings.Split(str, "")
+    for _, b:= range sarr {
+        if b == "(" {
+            s.push(")")
+        } else if b == "{" {
+            s.push("}")
+        } else if b == "[" {
+            s.push("]")
+        } else if s.isempty() || s.pop() != b {
+            return false
+        }
+    }
+    return s.isempty()
 }
+
 
 
 /*
