@@ -62,3 +62,41 @@ func shortestWordDistance(words []string, word1 string, word2 string) int {
 
 	return result
 }
+
+
+In Python
+==========
+
+import sys
+
+def find_min_distance_between_two_same_words(words, word1):
+    distance = dict()
+    distance[word1] = sys.maxint
+
+    result = sys.maxint
+    for index, word in enumerate(words):
+        if word ==word1:
+            if distance[word1] != sys.maxint:
+                result = min(result, abs(distance[word1] - index))
+            distance[word1] = index
+
+    print 'min distance between words:%s and %s is %d' % (word1, word1, result)
+
+def find_min_distance_between_two_words(words, word1, word2):
+    distance = dict()
+    distance[word1] = sys.maxint
+    distance[word2] = sys.maxint
+
+    result = sys.maxint
+    for index, word in enumerate(words):
+        if word == word1:
+            distance[word1] = index
+            if distance[word2] != sys.maxint:
+                result = min(result, abs(distance[word2]-distance[word1]))
+
+        if word == word2:
+            distance[word2] = index
+            if distance[word1] != sys.maxint:
+                result = min(result, abs(distance[word2]-distance[word1]))
+
+    print 'min distance between words:%s and %s is %d' %(word1, word2, result)
