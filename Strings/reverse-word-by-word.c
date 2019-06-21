@@ -40,3 +40,29 @@ void reverseWords(char* str, int strSize) {
     //last word does not have any following spaces, so take care of it.
     reverseWord(str, start, strSize-1);
 }
+
+In Python
+==========
+def reverse_string_with_index(str_input, start, end):
+    str_input = list(str_input)
+    while start<end:
+        str_input[start], str_input[end] = str_input[end], str_input[start]
+        start = start+1
+        end = end-1
+    return "".join(str_input)
+
+def reverse_string_word_by_word(str_input):
+    # reverse the entire string
+    str_input = reverse_string_with_index(str_input, 0, len(str_input)-1)
+
+    # reverse each word
+    i=0
+    start = 0
+    while i < len(str_input):
+        if str_input[i] == ' ':
+            str_input = reverse_string_with_index(str_input, start, i-1)
+            start = i+1
+        i = i+1
+
+    str_input = reverse_string_with_index(str_input, start, len(str_input)-1)
+    print str_input
