@@ -45,3 +45,37 @@ char *addBinary(char *a, char *b)
 	}
 	return save;
 }
+
+In Python
+==========
+def sum_two_binary(bin1, bin2):
+    bin1 = list(bin1)
+    bin2 = list(bin2)
+    carry = 0
+    l1 = len(bin1)-1
+    l2 = len(bin2)-1
+
+    result = list()
+
+    while l1 >=0 or l2 >=0:
+        if l1 >=0: d1 = int(bin1[l1])
+        else: d1 = 0
+
+        if l2 >=0: d2 = int(bin2[l2])
+        else: d2 = 0
+
+        bsum = d1+d2+carry
+        if bsum > 1:
+            result = ['1'] + result
+            carry = 1
+        else:
+            result = [str(bsum)] + result
+            carry = 0
+
+        l1 = l1-1
+        l2 = l2-1
+
+    #if carry is set add to the list
+    if carry: result = [str(carry)] + result
+    
+    return ''.join(result)
