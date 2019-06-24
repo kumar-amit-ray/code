@@ -47,6 +47,20 @@ func parenthesesisValidator(str string) bool {
     return s.isempty()
 }
 
+In Python
+===========
+def paranthesis_validator(inp):
+    s = Stack()
+    inp = list(inp)
+    for char in inp:
+        if char == '{': s.push('}')
+        elif char == '[': s.push(']')
+        elif char == '(': s.push(')')
+        elif s.is_empty() == True or s.pop() != char: return False
+
+    if s.is_empty() is True: return True
+    return False
+
 
 
 /*
