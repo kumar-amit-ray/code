@@ -49,39 +49,6 @@ func parenthesesisValidator(str string) bool {
 
 In Python
 ===========
-'''
-Alogorith:
-    1. if we find any ending parenthesis, we must have found an openning one before. if not, delete it.
-    2. Any opening parenthesis, just push it onto the stack.
-    3. Finally loop through stack, to remove any unnecessarry opening parenthesis.
-    4. Deletion from output is tricky. 
-        a. when any element is removed from the list, list shrink by one index.
-        b. so to keey sync between input and output, we need to maintain an offset, so that
-        c. for any input index, we can determine output index. 
-        d. e.g. when one elemnt is deleted from output, we set offset=1.
-        e. next time when we delete at input index =2, our output index is (2-offset)
-'''
-
-def unblanced_paranthesis_to_balanced(inp):
-    s = Stack()
-    inp = list(inp)
-    output = inp[:]
-
-    offset = 0
-    for index, char in enumerate(inp):
-        if char == ')':
-            if s.is_empty() == True or inp[s.pop()] != '(':
-                del output[index-offset]
-                offset = offset+1
-        elif char == '(':
-            s.push(index)
-
-    while s.is_empty() is False:
-        del output[s.pop()-offset]
-        offset = offset+1
-
-    return ''.join(output)
-
 
 /*
 	Given a string with alpha-numeric characters and parentheses, return a string with balanced parentheses 
@@ -228,18 +195,14 @@ def unblanced_paranthesis_to_balanced(inp):
     s = Stack()
     inp = list(inp)
     output = inp[:]
-    switcher = {
-        ')':'(',
-        '}':'{',
-        ']':'['
-    }
+
     offset = 0
     for index, char in enumerate(inp):
-        if char == ')' or char == '}' or char == ']':
-            if s.is_empty() == True or inp[s.pop()] != switcher[char]:
+        if char == ')':
+            if s.is_empty() == True or inp[s.pop()] != '(':
                 del output[index-offset]
                 offset = offset+1
-        else:
+        elif char == '(':
             s.push(index)
 
     while s.is_empty() is False:
