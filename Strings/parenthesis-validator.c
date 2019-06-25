@@ -49,18 +49,38 @@ func parenthesesisValidator(str string) bool {
 
 In Python
 ===========
-def paranthesis_validator(inp):
+'''
+Alogorith:
+    1. if we find any ending parenthesis, we must have found an openning one before. if not, delete it.
+    2. Any opening parenthesis, just push it onto the stack.
+    3. Finally loop through stack, to remove any unnecessarry opening parenthesis.
+    4. Deletion from output is tricky. 
+        a. when any element is removed from the list, list shrink by one index.
+        b. so to keey sync between input and output, we need to maintain an offset, so that
+        c. for any input index, we can determine output index. 
+        d. e.g. when one elemnt is deleted from output, we set offset=1.
+        e. next time when we delete at input index =2, our output index is (2-offset)
+'''
+
+def unblanced_paranthesis_to_balanced(inp):
     s = Stack()
     inp = list(inp)
-    for char in inp:
-        if char == '{': s.push('}')
-        elif char == '[': s.push(']')
-        elif char == '(': s.push(')')
-        elif s.is_empty() == True or s.pop() != char: return False
+    output = inp[:]
 
-    if s.is_empty() is True: return True
-    return False
+    offset = 0
+    for index, char in enumerate(inp):
+        if char == ')':
+            if s.is_empty() == True or inp[s.pop()] != '(':
+                del output[index-offset]
+                offset = offset+1
+        elif char == '(':
+            s.push(index)
 
+    while s.is_empty() is False:
+        del output[s.pop()-offset]
+        offset = offset+1
+
+    return ''.join(output)
 
 
 /*
