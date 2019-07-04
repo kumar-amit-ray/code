@@ -87,3 +87,42 @@ void bstIteratorFree(struct BSTIterator *iter) {
  * while (bstIteratorHasNext(i)) printf("%d\n", bstIteratorNext(i));
  * bstIteratorFree(i);
  */
+
+In Python
+---------
+class BSTIterator(object):
+
+    def __init__(self, root):
+        """
+        :type root: TreeNode
+        """
+        self.root = root
+        self.stack = list()
+        self.iterate_stack(self.root)
+
+    def iterate_stack(self, root):
+        left_subtree = root
+        while left_subtree is not None:
+            self.stack.append(left_subtree)
+            left_subtree = left_subtree.left
+
+    def next(self):
+        """
+        @return the next smallest number
+        :rtype: int
+        """
+        elem = self.stack.pop()
+        if elem.right is not None:
+            self.iterate_stack(elem.right)
+
+        return elem.val
+
+    def hasNext(self):
+        """
+        @return whether we have a next smallest number
+        :rtype: bool
+        """
+        if len(self.stack) == 0:
+            return False
+        else:
+            return True
