@@ -29,3 +29,35 @@ void checkpalidrome(char *s, int start, int end, int *count){
         start--;end++;(*count)++;
     }
 }
+
+In Python
+---------
+class Solution(object):
+    def countSubstrings(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        i = 0
+        count = 0
+        s = list(s)
+
+        if len(s) == 0:
+            return 0
+        while i<len(s):
+            count = count + self.count_palindromic_substring_of_a_range(s, i, i) + \
+                    self.count_palindromic_substring_of_a_range(s, i, i+1)
+            i = i+1
+        return count 
+    
+    def count_palindromic_substring_of_a_range(self, s, i, j):
+        count = 0
+        while i>=0 and j < len(s):
+            if s[i] == s[j]:
+                count = count+1
+                i = i-1
+                j = j+1
+            else:
+                break
+            
+        return count
