@@ -29,37 +29,34 @@ return its zigzag level order traversal as:
  *     Right *TreeNode
  * }
  */
-func zigzagLevelOrder(root *TreeNode) [][]int {
-	var result [][] int
-	var m map[int][]int
+    def zigzagLevelOrder(self, root):
+        order = list()
+        self.zigzagLevelOrderWithLevel(root, 0, order)
+        return order
 
-	m = make(map[int][]int)
-	zigzagLevelOrderHelper(root, m, 0)
+    """
+    This problem can be solved by two stacks also- https://www.youtube.com/watch?v=vjt5Y6-1KsQ
+    In this algo, we applied a simple concept of append and insert to solve the problem.
+    - The way we process each level is same.
+    - At each level left child is process first and right child is processed next. 
+    - The difference is how we put that in the list. 
+    - As per the problem, at each odd level, it should be right to left. and each even level it should be left to right. 
+    - So, as our simple order is left to right, at each odd level we just reverse the list append and make it an insert.
+    """
 
-	for _, value := range m {
-		result = append(result, value)
-	}
-	return result
-}
+    def zigzagLevelOrderWithLevel(self, node, level, order):
+        if node is None:
+            return
 
-func zigzagLevelOrderHelper(root *TreeNode, m map[int][]int, level int) {
-	if root == nil {
-		return
-	}
-	val, ok := m[level]
-	if ok == true {
-		val = append(val, root.Val)
-		m[level]  = val
-	} else {
-		newval := make([]int, 0)
-		newval = append(newval, root.Val)
-		m[level] = newval
-	}
-	if level%2 != 0 {
-		zigzagLevelOrderHelper(root.Left, m, level+1)
-		zigzagLevelOrderHelper(root.Right, m, level+1)
-	} else {
-		zigzagLevelOrderHelper(root.Right, m, level+1)
-		zigzagLevelOrderHelper(root.Left, m, level+1)
-	}
-}
+        if len(order) > level:
+            if level % 2 != 0:
+                order[level].insert(0, node.val)
+            else:
+                order[level].append(node.val)
+        else:
+            level_list = list()
+            level_list.append(node.val)
+            order.append(level_list)
+
+        self.zigzagLevelOrderWithLevel(node.left, level + 1, order)
+        self.zigzagLevelOrderWithLevel(node.right, level + 1, order)
