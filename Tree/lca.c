@@ -42,3 +42,34 @@ struct TreeNode* lowestCommonAncestor(struct TreeNode* root, struct TreeNode* p,
     if (l && r) {return root;}
     return (r)?r:l;  
 }
+
+In Python
+=========
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def lowestCommonAncestor(self, root, p, q):
+        """
+        :type root: TreeNode
+        :type p: TreeNode
+        :type q: TreeNode
+        :rtype: TreeNode
+        """
+        if root is None or p is None or q is None:
+            return None
+        if root == p or root == q:
+            return root
+        lcaleft = self.lowestCommonAncestor(root.left, p, q)
+        lcaright = self.lowestCommonAncestor(root.right, p, q)
+        if lcaleft and lcaright:
+            return root
+        if lcaleft:
+            return lcaleft
+        else:
+            return lcaright
+        
