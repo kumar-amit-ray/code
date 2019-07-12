@@ -1,4 +1,6 @@
 /*
+Leetcode: https://leetcode.com/problems/binary-tree-vertical-order-traversal/
+
 Write a program to print all the columns of a binary tree from left to right and top down.
 
           1
@@ -31,24 +33,47 @@ of root plus 1. For every HD value, we maintain a list of nodes in a hasp map. W
 we go to the hash map entry and add the node to the hash map using HD as a key in map.
 */
 
-func VOrderTraversal(root *node) map[int][]int {
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
 
-out := make(map[int][]int)
-if root == nil {
-	return out
-}
-VOrderTraversalHelper(root, 0, out)
-}
+class Solution(object):
+    def __init__(self):
+        self.min_level =0
+        self.max_level =0
+        
+    def verticalOrder(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[List[int]]
+        """
+        result = list()
+        if root is None:
+            return result
 
-func VOrderTraversalHelper(root *node, level int, result map[int][]int) {
-if root == nil {
-	return
-}
-if _, ok := result[level]; ok {
-	result[level] = append(result[level], node.value)
-} else {
-	result[level] = []int{node.value}
-}
-VOrderTraversalHelper(node.left, level-1, result)
-VOrderTraversalHelper(node.right, level+1, result)
-}
+        hashmap = dict()
+        self.vertical_level_order_traversal_helper(root, 0, hashmap)
+        i = self.min_level
+        while i <= self.max_level:
+            result.append(hashmap[i])
+            i +=1
+
+        return result
+    
+    def vertical_level_order_traversal_helper(self, node, level, hashmap):
+        if node is None:
+            return
+        if level not in hashmap:
+            hashmap[level] = list()
+        hashmap[level].append(node.val)
+
+        if level<0:
+            self.min_level = min(self.min_level, level)
+        else:
+            self.max_level = max(self.max_level, level)
+
+        self.vertical_level_order_traversal_helper(node.left, level-1, hashmap)
+        self.vertical_level_order_traversal_helper(node.right, level+1, hashmap)
