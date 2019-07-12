@@ -1,4 +1,4 @@
-/*
+"""
 Leetcode: https://leetcode.com/problems/binary-tree-vertical-order-traversal/
 
 Write a program to print all the columns of a binary tree from left to right and top down.
@@ -32,7 +32,7 @@ Horizontal distance of root minus 1. For right subtree, we pass the Horizontal D
 of root plus 1. For every HD value, we maintain a list of nodes in a hasp map. Whenever we see a node in traversal,
 we go to the hash map entry and add the node to the hash map using HD as a key in map.
 */
-
+"""
 # Definition for a binary tree node.
 # class TreeNode(object):
 #     def __init__(self, x):
