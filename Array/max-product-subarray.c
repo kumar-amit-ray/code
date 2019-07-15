@@ -49,3 +49,26 @@ int maxProduct(int* nums, int numsSize) {
     }
     return ans;
 }
+
+In Python
+=========
+class Solution(object):
+    def maxProduct(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        max_product=nums[0]
+        prev_max_product = nums[0]
+        min_product = nums[0]
+        prev_min_product = nums[0]
+        result = nums[0]
+        i=1
+        while i<len(nums):
+            max_product = max(prev_max_product*nums[i], prev_min_product*nums[i], nums[i])
+            min_product = min(prev_max_product*nums[i], prev_min_product*nums[i], nums[i])
+            result = max(result, max_product)
+            prev_max_product = max_product
+            prev_min_product = min_product
+            i +=1
+        return result
