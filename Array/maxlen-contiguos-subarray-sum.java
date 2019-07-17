@@ -31,3 +31,35 @@ class Solution {
         return maxLen;
     }
 }
+
+In Python
+---------
+'''
+ Given an array of integers and an integer k, you need to find the total number of continuous subarrays whose sum equals to k.
+
+Example 1:
+Input:nums = [1,1,1], k = 2
+Output: 2
+Leetcode - https://leetcode.com/problems/subarray-sum-equals-k/
+'''
+class Solution(object):
+    def subarraySum(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: int
+        """
+        map = dict()
+        count=0
+        sum = 0
+        map[sum] = 1
+        for num in nums:
+            sum +=num
+            if sum-k in map:
+                count += map[sum-k]
+            if sum in map:
+                map[sum] +=1
+            else:
+                map[sum] = 1
+        
+        return count
