@@ -61,7 +61,46 @@ int search(int* nums, int numsSize, int target) {
     else return binarySearch(nums, 0, pivot-1, target);
 }
 
+In Python
+=========
+class Solution(object):
+    def search(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: int
+        """
+        if nums is None or len(nums) == 0:
+            return -1
+        
+        pivot = self.find_pivot_in_rotated_sorted_array(nums)
+        if pivot == -1: return -1
 
+        if target==nums[pivot]: return pivot
+        elif target==nums[0]: return 0
+        elif target==nums[len(nums)-1]: return len(nums)-1
+        elif target < nums[len(nums)-1]: return self.do_binary_search(nums, pivot+1, len(nums)-1, target)
+        else: return self.do_binary_search(nums, 0, pivot-1, target)
+    
+    def find_pivot_in_rotated_sorted_array(self, nums):
+        start = 0
+        end = len(nums)-1
+        while start<=end:
+            pivot = start+end/2
+            if nums[pivot] > nums[pivot+1]: return pivot+1
+            elif nums[start] <= nums[pivot]: start=pivot+1
+            else: end = pivot-1
+
+        return -1
+
+    def do_binary_search(self, nums, start, end, target):
+        while start<=end:
+            pivot = start+end/2
+            if nums[pivot] == target: return pivot
+            elif nums[pivot] < target: start=pivot+1
+            else: end = pivot-1
+
+        return -1
 
 /*
 	Given a sorted array with possibly duplicate elements, the task is to find indexes of first and last occurrences of an element x in the given array.
@@ -126,3 +165,7 @@ int main()
   printf("\n%d %d\n", li, hi);
 */
 }
+
+
+In Python
+========
