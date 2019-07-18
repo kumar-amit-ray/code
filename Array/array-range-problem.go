@@ -26,6 +26,42 @@ for i:=0; i<len(intervals)-1; i++ {
 return true
 }
 
+In Python
+==========
+class Solution(object):
+    def convert_interval_to_dict(self, intervals):
+        new_intervals = list()
+        for interval in intervals:
+            itv = dict()
+            itv['start'] = interval[0]
+            itv['end'] = interval[1]
+            new_intervals.append(itv)
+
+        return new_intervals
+
+    def custom_interval_cmp(self, itv1, itv2):
+        if itv1['start'] < itv2['start']: return -1
+        if itv1['start'] > itv2['start']: return 1
+        else: return 0
+
+
+    def canAttendMeetings(self, intervals):
+        """
+        :type intervals: List[List[int]]
+        :rtype: bool
+        """
+        intervals = self.convert_interval_to_dict(intervals)
+
+        intervals = sorted(intervals, cmp=self.custom_interval_cmp)
+        #intervals = sorted(intervals, key = lambda i: i['start'])
+        i = 0
+        while i<len(intervals)-1:
+            if intervals[i]['end'] > intervals[i+1]['start']: return False
+            i +=1
+            
+        return True
+
+
 /*
 Given an array of meeting time intervals consisting of start and end times [[s1,e1],[s2,e2],...] (si < ei), 
 determine how many conf room is required for  all meetings.
