@@ -208,3 +208,67 @@ func insert(intervals []Interval, newInterval Interval) []Interval {
 	}
 	return newIntervals
 }
+
+In Python
+----------
+class Solution(object):
+    def insert(self, intervals, newInterval):
+        """
+        :type intervals: List[List[int]]
+        :type newInterval: List[int]
+        :rtype: List[List[int]]
+        """
+        result = list()
+        
+        if len(intervals) == 0: 
+            result.append(newInterval)
+            return result
+        
+        intervals = self.convert_interval_to_dict(intervals)
+        newInterval = {'start':newInterval[0], 'end':newInterval[1]}
+       
+        #copy the smaller interval
+        count = 0
+        index = 0
+        for interval in intervals:
+            if interval['end'] < newInterval['start']:
+                result.append(interval)
+                count +=1
+            else: break
+
+        if count < len(intervals): 
+            for interval in intervals[count:]:
+                if newInterval['end'] >= interval['start']:
+                    newInterval['start'] = min(newInterval['start'], interval['start'])
+                    newInterval['end'] = max(newInterval['end'], interval['end'])
+                    count +=1
+                else: break
+
+        result.append(newInterval)
+
+        #if count >= len(intervals): return self.convert_dict_to_intervals(result)
+        if count < len(intervals):
+            for interval in intervals[count:]:
+                result.append(interval)
+
+        return self.convert_dict_to_intervals(result)
+    
+    def convert_interval_to_dict(self, intervals):
+        new_intervals = list()
+        for interval in intervals:
+            itv = dict()
+            itv['start'] = interval[0]
+            itv['end'] = interval[1]
+            new_intervals.append(itv)
+
+        return new_intervals
+
+    def convert_dict_to_intervals(self, intervals):
+        result = list()
+        for interval in intervals:
+            entry = list()
+            entry.append(interval['start'])
+            entry.append(interval['end'])
+            result.append(entry)
+
+        return result
