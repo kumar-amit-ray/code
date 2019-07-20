@@ -54,3 +54,22 @@ func getFactorsWithMin(n, min int) (results [][]int) {
 	}
 	return results
 }
+
+In Python
+---------
+    def getFactors(self, num):
+        return self.getfactors_with_min(num, 2)
+
+    def getfactors_with_min(self, num, min):
+        a = min
+        result = list()
+        while a <= math.sqrt(num):
+            if num%a != 0: continue
+            b = num/a
+            subfactors = self.getfactors_with_min(b, a)
+            for subfactor in subfactors:
+                result.append(subfactor)
+            result.append([a,b])
+            a +=1
+
+        return result
