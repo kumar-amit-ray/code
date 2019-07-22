@@ -82,3 +82,48 @@ int solvePaintHouse()
     }
     return cost[MAX_ROW-1][minCostIndex];
 }
+
+In Python
+----------
+class HouseColoring:
+    def __init__(self):
+        self.costs = [[5,3,2],[1,8,4],[2,9,6],[8,3,1]]
+
+    def get_min(self, i, j, min1, min2):
+        if min1 == -1:
+            min1 = j
+        elif min2 == -1:
+            if self.costs[i][min1] < self.costs[i][j]:
+                min2 = j
+            else:
+                min2 = min1
+                min1 = j
+        elif self.costs[i][min1] > self.costs[i][j]:
+            min2 = min1
+            min1 = j
+        elif self.costs[i][min2] > self.costs[i][j]:
+            min2 = j
+
+        return min1, min2
+
+    def calculate_cost(self):
+        min1 = -1
+        min2 = -1
+        prevmin1 = -1
+        prevmin2 = -2
+        row = 0
+        while row <len(self.costs):
+            col = 0
+            while col < len(self.costs[0]):
+                if row != 0:
+                    if col == prevmin1: self.costs[row][col] +=self.costs[row-1][prevmin2]
+                    else: self.costs[row][col] +=self.costs[row-1][prevmin1]
+
+                min1, min2 = self.get_min(row, col, min1, min2)
+                col +=1
+
+            prevmin1 = min1
+            prevmin2 = min2
+            row +=1
+
+        return self.costs[len(self.costs)-1][min1]
