@@ -1,4 +1,4 @@
-/*
+'''
 Given a 2D binary matrix filled with 0's and 1's, find the largest rectangle containing only 1's and return its area.
 Input:
 [
@@ -10,7 +10,7 @@ Input:
 Output: 6
 
 https://www.youtube.com/watch?v=g8bSdXCG-lA
-*/
+'''
 class Solution(object):
     def __init__(self):
         self.h = Histogram()
