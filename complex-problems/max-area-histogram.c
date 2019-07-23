@@ -41,3 +41,54 @@ int findMaxRectrangeAreaOfHistogram(int hist[], int size)
 	return maxarea;
 }
 
+In Python
+---------
+class Solution(object):
+    def __init__(self):
+        self.stack = list()
+
+    def stack_empty(self):
+        if len(self.stack)==0:
+            return True
+        return False
+
+    def stack_top(self):
+        return self.stack[len(self.stack)-1]
+
+    def stack_pop(self):
+        return self.stack.pop()
+
+    def stack_push(self, val):
+        self.stack.append(val)
+        
+    def largestRectangleArea(self, heights):
+        """
+        :type heights: List[int]
+        :rtype: int
+        """
+        if heights is None or len(heights) == 0: return 0
+        i = 0
+        maxarea = 0
+        while i < len(heights):
+            if self.stack_empty() or heights[i] >= heights[self.stack_top()]:
+                self.stack_push(i)
+                i +=1
+            else:
+                current = self.stack_pop()
+                if self.stack_empty():
+                    area = heights[current] * i
+                else:
+                    area = heights[current] * (i-self.stack_top()-1)
+
+                maxarea = max(maxarea, area)
+
+        while self.stack_empty() is False:
+            current = self.stack_pop()
+            if self.stack_empty():
+                area = heights[current] * i
+            else:
+                area = heights[current] * (i - self.stack_top() - 1)
+
+            maxarea = max(maxarea, area)
+
+        return maxarea
