@@ -57,7 +57,7 @@ class Solution(object):
         if sum(nums)%k != 0:
             return False
         target = sum(nums)/k
-
+        nums.sort()
         row = len(nums)-1
         while row >=0 and nums[row] == target:
             row -=1
