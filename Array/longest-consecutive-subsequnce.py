@@ -1,4 +1,4 @@
-/*
+'''
 Given an array of integers, find the length of the longest sub-sequence such that elements in the subsequence
 are consecutive integers, the consecutive numbers can be in any order.
 Examples
@@ -14,7 +14,7 @@ The subsequence 36, 35, 33, 34, 32 is the longest subsequence
 of consecutive elements.
 
 Link to the solution - https://www.geeksforgeeks.org/longest-consecutive-subsequence/
-*/
+'''
 
 class Solution(object):
     def longestConsecutive(self, nums):
