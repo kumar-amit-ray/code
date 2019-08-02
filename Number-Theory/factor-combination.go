@@ -33,6 +33,7 @@ Output:
   [2, 4, 4],
   [4, 8]
 ]
+Leetcode - https://leetcode.com/problems/factor-combinations/
 */
 
 func getFactors(n int) [][]int {
@@ -64,10 +65,13 @@ In Python
         a = min
         result = list()
         while a <= math.sqrt(num):
-            if num%a != 0: continue
+            if num%a != 0:
+                a +=1
+                continue
             b = num/a
             subfactors = self.getfactors_with_min(b, a)
             for subfactor in subfactors:
+                subfactor.append(a)
                 result.append(subfactor)
             result.append([a,b])
             a +=1
