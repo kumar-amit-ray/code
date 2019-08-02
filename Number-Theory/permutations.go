@@ -40,6 +40,27 @@ func permute(nums []int) [][]int {
 	return ans
 }
 
+In Python
+----------
+def permute(nums):
+    result = list()
+    result.append([])
+    for index, num in enumerate(nums):
+        nresult = list()
+        for set in result:
+            j = 0
+            while j<=index:
+                temp = list(set)
+                temp.insert(j, num)
+                nresult.append(temp)
+                j +=1
+
+        result = nresult
+
+    return result
+
+
+
 	1. Given a set of distinct integers, nums, return all possible subsets (the power set).
 	
 	Note: The solution set must not contain duplicate subsets.
@@ -101,3 +122,21 @@ Output:
 		return result
 	}
 	
+
+In Python
+----------
+def gen_powerset(nums):
+    result = list()
+    result.append([])
+
+    for num in nums:
+        nresult = list()  # space = 2 power n
+        for set in result:
+            nresult.append(set)
+            temp = list(set)  # space = n *2 power n
+            temp.append(num)
+            nresult.append(temp)
+
+        result = nresult
+
+    return result
