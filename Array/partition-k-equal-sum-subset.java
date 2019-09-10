@@ -69,8 +69,6 @@ class Solution(object):
     def canPartitionKSubsets_recursive(self, groups, row, k, nums, target):
         if row <0:
             return True
-        
-        nums.sort()
         v = nums[row]
         row -=1
         i=0
