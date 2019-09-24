@@ -21,6 +21,9 @@ Example 2:
 Input: points = [[3,3],[5,-1],[-2,4]], K = 2
 Output: [[3,3],[-2,4]]
 (The answer [[-2,4],[3,3]] would also be accepted.)
+
+https://www.youtube.com/watch?v=eaYX0Ee0Kcg
+
 '''
 
 class Solution(object):
