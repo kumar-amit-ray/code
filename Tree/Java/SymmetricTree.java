@@ -18,6 +18,7 @@ But the following [1,2,2,null,3,null,3] is not:
    \   \
    3    3
 
+ @Leetcode - https://leetcode.com/problems/symmetric-tree/
  */
  
 /**
@@ -36,7 +37,7 @@ But the following [1,2,2,null,3,null,3] is not:
  * }
  */
 
-//https://leetcode.com/problems/symmetric-tree/
+
 class Solution {
     public boolean isSymmetric(TreeNode root) {
         if (root == null || (root.left == null && root.right == null))  {
