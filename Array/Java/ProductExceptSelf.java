@@ -18,8 +18,10 @@ Could you solve it with constant space complexity? (The output array does not co
 class Solution {
     public int[] productExceptSelf(int[] nums) {
         
+        
+        if (nums == null || nums.length == 0) {return new int[0;}
+        
         int[] result = new int[nums.length];
-        if (nums == null || nums.length == 0) {return result;}
         
         int tmp = 1;
         for (int i=0; i < nums.length; i++) {
