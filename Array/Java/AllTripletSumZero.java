@@ -37,6 +37,7 @@ class Solution {
                     Collections.sort(triplet);
                     result.add(triplet);
                 }
+                // put the number after we build the triplet so that complement is not one of complement != nums[j]
                 hmap.put(nums[j], j);
             }
             
