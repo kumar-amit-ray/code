@@ -27,11 +27,18 @@ public class ArrayInterval {
      *
      * @Leetcode - https://leetcode.com/problems/meeting-rooms/
      */
+class CompareDoubleArray implements Comparator<int[]> {
+    @Override
+    public int compare(int[] o1, int[] o2) {
+        return o1[0] - o2[0];
+    }
+}
+class Solution {
     public boolean canAttendMeetings(int[][] intervals) {
         if (intervals.length == 0) {
             return true;
         }
-        Arrays.sort(intervals, Comparator.comparingInt(a -> a[0]));
+        Arrays.sort(intervals, new CompareDoubleArray());
         for (int i=0; i<intervals.length-1; i++) {
             if (intervals[i][1] > intervals[i+1][0]) {
                 return false;
@@ -39,6 +46,7 @@ public class ArrayInterval {
         }
         return true;
     }
+}
 
     /**
      * Given an array of meeting time intervals consisting of start and end times [[s1,e1],[s2,e2],...] (si < ei),
