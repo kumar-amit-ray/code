@@ -40,22 +40,16 @@ public class WordDistance {
     }
 
     private int shortestWordDistanceSameWords(String[] words, String word) {
-        Map<String, List<Integer>> hmap = new HashMap<>();
         int minLen = Integer.MAX_VALUE;
-
-        for (int i=0; i<words.length; i++) {
+        Map<String, Integer> hmap = new HashMap<>();
+        for (int i= 0; i<words.length; i++) {
             if (!words[i].equals(word)) {
                 continue;
             }
-            if (!hmap.containsKey(word)) {
-                hmap.put(word, new ArrayList<Integer>());
+            if (hmap.containsKey(word)) {
+                minLen = Math.min(minLen, Math.abs(hmap.get(word) - i));
             }
-            hmap.get(word).add(i);
-            int lsize = hmap.get(word).size();
-            if (lsize > 1) {
-                List<Integer> l = hmap.get(word);
-                minLen = Math.min(minLen, Math.abs(l.get(lsize-1) - l.get(lsize-2)));
-            }
+            hmap.put(word, i);
         }
         return minLen;
     }
