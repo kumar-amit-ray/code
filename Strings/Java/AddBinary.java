@@ -46,7 +46,7 @@ public class AddBinary {
             carry = (sum >1)?1:0;
             // (1+1+1)=1 but (1+1=0), so keep track of odd and even number of 1's
             sum = (sum%2 == 0)?0:1;
-            sb.insert(0,String.valueOf(sum));
+            sb.insert(0, sum);
             lena--;lenb--;
         }
         if (carry==1) {
