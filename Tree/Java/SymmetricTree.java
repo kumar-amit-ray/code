@@ -40,34 +40,31 @@ But the following [1,2,2,null,3,null,3] is not:
 
 class Solution {
     public boolean isSymmetric(TreeNode root) {
-        if (root == null || (root.left == null && root.right == null))  {
+        if (root == null) {
             return true;
         }
-        if (root.left == null || root.right == null) {
-            return false;
-        }
-        return isSymmetricSubtreeRecursive(root.left, root.right);
+        return helper(root.left, root.right);
     }
     
-    private boolean isSymmetricSubtreeRecursive(TreeNode lst, TreeNode rst) {
-        if (lst.val != rst.val) {return false;}
-        if (lst.right != null && rst.left == null) {return false;}
-        if (lst.right == null && rst.left != null) {return false;}
-        if (lst.left == null && rst.right != null) {return false;}
-        if (lst.left != null && rst.right == null) {return false;}
-                
-        if (lst.left != null) {
-            boolean isSubTreeSymmetric1 = isSymmetricSubtreeRecursive(lst.left, rst.right);
-            if (isSubTreeSymmetric1 == false) {
-                return false;
-            }
-        }
-        if (lst.right != null) {
-            boolean isSubTreeSymmetric2 = isSymmetricSubtreeRecursive(lst.right, rst.left);
-            if (isSubTreeSymmetric2 == false) {
-                return false;
-            }
-        }
-        return true;
+    private boolean helper(TreeNode l, TreeNode r) {
+        if (l != null && r != null) {
+            if (!isSymmetricLevel(l, r)) {return false;}
+            if (l.left != null && !helper(l.left, r.right)) {return false;}
+            if (l.right != null && !helper(l.right, r.left)) {return false;}
+        
+            return true;
+        } else if (l == null && r == null) {
+            return true;
+        } 
+        return false;
     }
-}
+    
+    private boolean isSymmetricLevel(TreeNode l, TreeNode r) {
+            if (l.val != r.val) {return false;}
+            if (l.left != null && r.right == null) {return false;}
+            if (l.left == null && r.right != null) {return false;}
+            if (l.right != null && r.left == null) {return false;}
+            if (l.right == null && r.left != null) {return false;}
+            return true;
+    }
+} 
