@@ -15,45 +15,54 @@
 
 class Solution {
     public ListNode mergeKLists(ListNode[] lists) {
-        ListNode mergedListHead = null;
-        
-        for (ListNode list: lists) {
-            mergedListHead = merge2SortedLists(mergedListHead, list);
+        if (lists == null || lists.length == 0 ) {
+            return null;
         }
-        return mergedListHead;
-    }
-    
-    private ListNode merge2SortedLists(ListNode head1, ListNode head2) {
-        if (head1 == null) { return head2; }
-        if (head2 == null) { return head1; }
-
         ListNode newHead = null;
-        ListNode toPoint = null;
-
-        while (head1 != null && head2 != null) {
-            ListNode n;
-            if (head1.val < head2.val) {
-                n = head1;
-                head1 = head1.next;
-            } else {
-                n = head2;
-                head2 = head2.next;
-            }
-            if (newHead == null) {
-                newHead = n;
-                toPoint = newHead;
-            } else {
-                toPoint.next = n;
-                toPoint = toPoint.next;
-            }
-        }
-        ListNode remaining = (head1 == null)?head2:head1;
-        while(remaining != null) {
-            toPoint.next = remaining;
-            toPoint = toPoint.next;
-            remaining = remaining.next;
-
+        for (int i=0; i<lists.length; i++) {
+            newHead = merge2Lists(newHead, lists[i]);
         }
         return newHead;
+    }
+    
+    private ListNode merge2Lists(ListNode l1, ListNode l2) {
+        if (l1 == null) {
+            return l2;
+        }
+        if (l2 == null) {
+            return l1;
+        }
+        
+        ListNode head = null;
+        ListNode curr = null;
+        while (l1 != null && l2 != null) {
+            if (l1.val < l2.val) {
+                if (head == null) {
+                    head = l1;
+                    curr = head;
+                } else {
+                    curr.next = l1;
+                    curr = curr.next;
+                }
+                l1 = l1.next;
+            } else {
+                if (head == null) {
+                    head = l2;
+                    curr = head;
+                } else {
+                    curr.next = l2;
+                    curr = curr.next;
+                }
+                l2 = l2.next;
+            }
+        }
+
+        if (l1 == null) {
+            curr.next = l2;
+        } else {
+            curr.next = l1;
+        }
+        
+        return head;
     }
 }
