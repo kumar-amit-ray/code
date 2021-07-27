@@ -17,6 +17,20 @@ Input: nums = [1]
 Output: [[1]]
 
 @Leetcode - https://leetcode.com/problems/permutations/
+
+Time Complexity -
+1. Clone list every time - O(n)
+2. List delete every time - O(n)
+3. The algorithm is running  for O(n!)
+Hence complexity is O(2n * n!) = O(n * n!)
+
+Space complexity -
+1. Clone a list - O(n) 
+2. Clone a list for !n times. O(n * n!)
+2. Result - O(n!)
+
+So total - O(n * n!) + O(n!) = O(n * n!)
+ 
  */
 class Solution {
     public List<List<Integer>> permute(int[] nums) {
