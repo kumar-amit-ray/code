@@ -1,3 +1,46 @@
+/**
+@Leetcode - https://leetcode.com/problems/minimum-remove-to-make-valid-parentheses/
+@Algorithm:
+    Each time a '(' is encountered put a * in sb and push the index i to stack
+    Each time a ')' is encounterd
+        if the stack is empty - it is not a valid ')', so put * in the sb.
+        if the stack is not empty - we found one matching ')' for '(', so pop the stack and set the index with '('
+        
+    Now go through sb and remove all * from the it becaue these are the '(' that does not have a ')'
+ */
+class Solution {
+    public String minRemoveToMakeValid(String s) {
+        if (s == null || s.length() == 0) {
+            return s;
+        }
+        StringBuilder sb = new StringBuilder();
+        Stack<Integer> stack = new Stack();
+        
+        for (int i=0; i<s.length();i++) {
+            if (s.charAt(i) == '(') {
+                stack.push(i);
+                sb.append('*');
+            } else if (s.charAt(i) == ')') {
+                if (!stack.isEmpty()) {
+                    int index = stack.pop();
+                    sb.setCharAt(index, s.charAt(index));
+                    sb.append(s.charAt(i));
+                } else {
+                    sb.append('*');
+                }
+            } else {
+                sb.append(s.charAt(i));
+            }
+        }
+        StringBuilder result = new StringBuilder();
+        for (int i=0; i<sb.length(); i++) {
+            if (sb.charAt(i) != '*') {
+                result.append(sb.charAt(i));
+            }
+        }
+        return result.toString();
+    }
+}
 
 public class MakeValidParenthesis {
     /**
