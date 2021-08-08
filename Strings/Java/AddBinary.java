@@ -1,9 +1,4 @@
-public class AddBinary {
-    public static void main(String[] args) {
-        new AddBinary().addBinary("11", "1");
-    }
-
-    /**
+ /**
      *
      * Given two binary strings a and b, return their sum as a binary string.
      *
@@ -27,6 +22,7 @@ public class AddBinary {
      *
      * @Leetcode - https://leetcode.com/problems/add-binary/
      */
+class Solution {
     public String addBinary(String a, String b) {
         if (a == null) {
             return b;
@@ -43,15 +39,20 @@ public class AddBinary {
             int b1 = (lena >=0)?Character.getNumericValue(a.charAt(lena)):0;
             int b2 = (lenb >=0)?Character.getNumericValue(b.charAt(lenb)):0;
             int sum = b1+b2+carry;
-            carry = (sum >1)?1:0;
-            // (1+1+1)=1 but (1+1=0), so keep track of odd and even number of 1's
-            sum = (sum%2 == 0)?0:1;
-            sb.insert(0, sum);
+            if(sum <= 1) {
+                carry = 0;
+            } else if (sum % 2 == 0) {
+                sum = 0; carry = 1; 
+            } else {
+                // (1+1+1)=1 but (1+1=0), so keep track of odd and even number of 1's
+                sum = 1; carry = 1;
+            }
+            sb.append(sum);
             lena--;lenb--;
         }
         if (carry==1) {
-            sb.insert(0, '1');
+            sb.append(carry);
         }
-        return sb.toString();
+        return sb.reverse().toString();
     }
 }
