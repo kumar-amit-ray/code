@@ -28,76 +28,85 @@ Output: [0]
 @Youtube - https://www.youtube.com/watch?v=qe_pQCh09yU
  */
 class Solution {
-    
-    private Map<Integer, List<Integer>> adjList = new HashMap();
-    private Map<Integer, Integer> color = new HashMap();
-    private Stack<Integer> stack = new Stack(); 
-    private boolean isDag = true;
-    final static int NOT_PROCESSED = 0;
-    final static int PROCESSING = 1;
-    final static int PROCESSED = 2;
-    
-    
-    
+private static final int NOT_PROCESSED = 0;
+    private static final int PROCESSING = 1;
+    private static final int PROCESSED = 2;
+
+    private Map<Integer, Integer> color = new HashMap<>();
+    private Stack<Integer> stack = new Stack<>();
+    private Map<Integer, List<Integer>> adjList;
+    private boolean isDAG = true; // if this is a directed acyclic graph
+
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        init(numCourses, prerequisites);
+        detectDAG(numCourses);
+        return this.isDAG;
+    }
+
     public int[] findOrder(int numCourses, int[][] prerequisites) {
-        int[] result = new int[numCourses];
-        if (numCourses == 0 || prerequisites == null || prerequisites.length == 0) {
-            return result;
+        init(numCourses, prerequisites);
+        detectDAG(numCourses);
+        if (!this.isDAG) {
+            return new int[0];
         }
-        computeAdjList(numCourses, prerequisites);
-        detectCycle(numCourses);
-        if (!isDag) {
-            return result;
-        }
-        int i =0;
+        int[] result = new int[stack.size()];
+        int i = 0;
         while (!stack.isEmpty()) {
-            result[i++] = stack.pop(); 
+            result[i++] = stack.pop();
         }
         return result;
     }
-    
-    private void computeAdjList(int numCourses, int[][] prerequisites) {
-        for (int[] preReq : prerequisites) {
-            int dest = preReq[1];
-            int src = preReq[0];
-            
-            List l = adjList.getOrDefault(src, new ArrayList<Integer>());
-            l.add(dest);
-            adjList.put(src, l);
-        }
-        System.out.println(adjList);
-    }
-    
-    private void detectCycle(int numCourses) {
+
+    private void init(int numCourses, int[][] prerequisites) {
+        adjList = buildAdjList(numCourses, prerequisites);
+
         for (int i=0; i<numCourses; i++) {
             color.put(i, NOT_PROCESSED);
         }
-        
-        for (int i=0; i<numCourses; i++) {
-            if (!isDag) {
+    }
+
+    private Map<Integer, List<Integer>> buildAdjList(int numCourses, int[][] prerequisites) {
+        Map<Integer, List<Integer>> adjList = new HashMap<>();
+
+        for (int[] prerequisite : prerequisites) {
+            int dest = prerequisite[0];
+            int src = prerequisite[1];
+            List<Integer> l = adjList.getOrDefault(src, new ArrayList<>());
+            l.add(dest);
+            adjList.put(src, l);
+        }
+        System.out.println("adjacency build complete...");
+        return adjList;
+    }
+
+    private void detectDAG(int numCourses) {
+        System.out.println("cycle detection...");
+        for (int i = 0; i<numCourses; i++) {
+            System.out.println("starting with node " + i);
+            if (!this.isDAG) {
                 return;
             }
-            dfs(i);
+            if (color.get(i) == NOT_PROCESSED) {
+                dfs(i);
+            }
         }
     }
-    
+
     private void dfs(int vertex) {
-        if (!isDag || color.get(vertex) == PROCESSED) {
+        if (!isDAG || color.get(vertex) == PROCESSED) {
             return;
         }
         if (color.get(vertex) == PROCESSING) {
-            isDag = false;
+            this.isDAG = false;
             return;
         }
         color.put(vertex, PROCESSING);
         if (adjList.containsKey(vertex)) {
-            for (int edge : adjList.get(vertex)) {
-                dfs(edge);
+            for (int adjVertex : adjList.get(vertex)) {
+                dfs(adjVertex);
             }
         }
         color.put(vertex, PROCESSED);
         stack.push(vertex);
     }
-    
-    
 }
